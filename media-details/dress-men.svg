@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 900" fill="none">
+<rect width="800" height="900" rx="36" fill="#F6EFE6"/>
+<circle cx="400" cy="210" r="122" fill="#FFF8F0" stroke="#D8C8B9" stroke-width="3" stroke-dasharray="8 10"/>
+<path d="M316 248h168l34 112-75 58-43-60-43 60-75-58 34-112Z" fill="#F6F5F2" stroke="#C7B9A9" stroke-width="4"/>
+<path d="M369 248h62l-9 86-22 24-22-24-9-86Z" fill="#E6E1D8"/>
+<path d="M386 247h28l16 32-30 72-30-72 16-32Z" fill="#7E8B90"/>
+<path d="M315 420c20 33 45 49 85 49s65-16 85-49l20 218H295l20-218Z" fill="#9EA7A6" stroke="#6D7977" stroke-width="4"/>
+<path d="M333 638h108v121H309l24-121Z" fill="#626D6B"/>
+<path d="M467 638H359v121h132l-24-121Z" fill="#626D6B"/>
+<rect x="298" y="760" width="118" height="34" rx="16" fill="#CFAF8E"/>
+<rect x="384" y="760" width="118" height="34" rx="16" fill="#CFAF8E"/>
+<path d="M157 291c30-31 81-58 123-69l43 130-47 33-38-58c-28-20-51-18-81-36Z" fill="#D7CFBE" stroke="#B4A791" stroke-width="4"/>
+<path d="M643 291c-30-31-81-58-123-69l-43 130 47 33 38-58c28-20 51-18 81-36Z" fill="#D7CFBE" stroke="#B4A791" stroke-width="4"/>
+<rect x="244" y="659" width="91" height="33" rx="16" fill="#E0D1BF"/>
+<rect x="466" y="659" width="91" height="33" rx="16" fill="#E0D1BF"/>
+</svg>
