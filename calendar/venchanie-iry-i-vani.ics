@@ -1,0 +1,17 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Ira and Vanya Wedding//RU
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:venchanie-ira-vanya-20260805@example.local
+DTSTAMP:20260721T180000Z
+DTSTART:20260805T100000Z
+DTEND:20260805T140000Z
+SUMMARY:Таинство венчания Иры и Вани
+LOCATION:Церковь Троицы Живоначальной, Лазоревый проезд\, 15\, строение 3\, Москва
+DESCRIPTION:Сбор гостей с 13:00. Начало венчания в 14:00. После венчания — прогулка по саду и парку.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+END:VEVENT
+END:VCALENDAR
