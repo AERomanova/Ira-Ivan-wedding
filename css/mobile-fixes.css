@@ -1,0 +1,486 @@
+/* Mobile layout corrections — loaded after all other styles */
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+img,
+svg,
+video {
+  max-width: 100%;
+}
+
+@media (max-width: 780px) {
+  :root {
+    --mobile-side: clamp(1rem, 5vw, 1.35rem);
+  }
+
+  body {
+    padding-bottom: 74px;
+  }
+
+  main,
+  section,
+  article,
+  .page-shell {
+    min-width: 0;
+  }
+
+  .container {
+    width: auto;
+    max-width: none;
+    margin-inline: var(--mobile-side);
+  }
+
+  h1,
+  h2,
+  h3,
+  p,
+  li,
+  a,
+  strong,
+  span {
+    overflow-wrap: anywhere;
+  }
+
+  h2 {
+    font-size: clamp(2.25rem, 11vw, 3.75rem);
+    line-height: 1.02;
+  }
+
+  .section {
+    padding-block: clamp(4rem, 14vw, 6rem);
+  }
+
+  /* Keep hero copy and hero art in separate vertical zones. */
+  .home-hero,
+  .wedding-hero,
+  .celebration-hero,
+  .family-hero {
+    min-height: auto !important;
+    height: auto !important;
+    align-items: start !important;
+    padding-bottom: clamp(315px, 86vw, 410px) !important;
+  }
+
+  .home-hero__content,
+  .wedding-hero__content,
+  .celebration-hero__content,
+  .family-hero__content {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    padding-top: calc(var(--header-height) + 2.6rem) !important;
+    padding-bottom: 2.2rem;
+  }
+
+  .home-hero__title,
+  .wedding-hero__title,
+  .celebration-hero__title,
+  .family-hero__title {
+    max-width: 8.5ch !important;
+    font-size: clamp(3.8rem, 17vw, 6rem) !important;
+  }
+
+  .home-hero__subtitle,
+  .home-hero__small-note,
+  .wedding-hero__lead,
+  .celebration-hero__lead,
+  .family-hero__lead {
+    max-width: 29ch !important;
+  }
+
+  .home-hero__art,
+  .family-hero__art {
+    z-index: 2 !important;
+    right: -8% !important;
+    bottom: 0 !important;
+    width: 116vw !important;
+    height: clamp(300px, 78vw, 380px) !important;
+    object-position: center bottom !important;
+    opacity: 0.78 !important;
+    border-radius: 42% 42% 0 0 / 13% 13% 0 0 !important;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.8) 18%, #000 42%) !important;
+    mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.8) 18%, #000 42%) !important;
+  }
+
+  .wedding-church-placeholder,
+  .garden-table {
+    z-index: 2 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: clamp(300px, 78vw, 390px) !important;
+    opacity: 0.62 !important;
+  }
+
+  .celebration-hero__house {
+    bottom: 6% !important;
+    opacity: 0.22 !important;
+  }
+
+  .home-scroll-cue,
+  .wedding-scroll,
+  .celebration-scroll,
+  .family-scroll {
+    display: none !important;
+  }
+
+  /* Facts remain readable and never spill outside the viewport. */
+  .wedding-hero__facts,
+  .celebration-hero__facts {
+    grid-template-columns: 1fr !important;
+    gap: .15rem;
+    width: 100%;
+    margin-top: 1.25rem;
+    padding: .45rem;
+    border-radius: 18px;
+    background: rgba(255,250,243,.88);
+    backdrop-filter: blur(12px);
+  }
+
+  .celebration-hero__facts {
+    color: var(--color-forest);
+  }
+
+  .wedding-hero__facts > div,
+  .celebration-hero__facts > div,
+  .wedding-hero__facts > div + div,
+  .celebration-hero__facts > div + div {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: .75rem;
+    width: 100%;
+    padding: .72rem .8rem !important;
+    border: 0 !important;
+    border-bottom: 1px solid rgba(62,58,53,.09) !important;
+  }
+
+  .wedding-hero__facts > div:last-child,
+  .celebration-hero__facts > div:last-child {
+    border-bottom: 0 !important;
+  }
+
+  /* Event cards: image above, text below, no overlap. */
+  .event-card {
+    display: grid !important;
+    grid-template-rows: auto auto !important;
+    min-height: 0 !important;
+    height: auto !important;
+  }
+
+  .event-card__visual,
+  .event-card__visual--final {
+    position: relative !important;
+    min-height: 250px !important;
+    height: 250px !important;
+  }
+
+  .event-card__visual--final img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .event-card__content {
+    position: relative !important;
+    z-index: 5;
+    min-height: 0 !important;
+    padding: 1.5rem !important;
+    background: inherit;
+  }
+
+  .event-card__date {
+    flex-wrap: wrap;
+    margin-bottom: 1.2rem;
+  }
+
+  .event-card__date strong {
+    font-size: clamp(3.4rem, 17vw, 5rem);
+  }
+
+  /* Alternating copy/image sections stack into clean cards. */
+  .home-story__layout,
+  .pets-teaser__layout,
+  .wedding-place__layout,
+  .celebration-place__layout,
+  .celebration-dress__layout,
+  .collection-story__layout,
+  .interactive-shelf__layout,
+  .pet-profile__layout {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 2rem !important;
+  }
+
+  .home-story__copy,
+  .pets-teaser__copy,
+  .wedding-place__copy,
+  .celebration-place__copy,
+  .collection-story__copy,
+  .pet-profile__copy {
+    position: relative;
+    z-index: 4;
+    min-width: 0;
+  }
+
+  .home-story__copy {
+    order: 1;
+  }
+
+  .home-story__visual {
+    order: 2;
+    min-height: 350px !important;
+  }
+
+  .rabbit-shelf,
+  .collection-album,
+  .interactive-shelf__visual,
+  .wedding-place__map,
+  .celebration-map,
+  .open-suitcase,
+  .pet-profile__portrait {
+    position: relative !important;
+    width: 100% !important;
+    max-width: 100%;
+    min-height: 0 !important;
+    height: auto !important;
+  }
+
+  .rabbit-shelf,
+  .collection-album,
+  .interactive-shelf__visual {
+    min-height: 390px !important;
+  }
+
+  .wedding-place__map,
+  .celebration-map,
+  .open-suitcase {
+    min-height: auto !important;
+  }
+
+  .wedding-place__map-art,
+  .celebration-map__art,
+  .open-suitcase__illustration,
+  .dress-card__image {
+    position: relative !important;
+    display: block;
+    width: 100% !important;
+    height: auto !important;
+    object-fit: contain !important;
+  }
+
+  /* Timeline is a simple two-column mobile list. */
+  .wedding-timeline::before,
+  .wedding-timeline::after {
+    display: none !important;
+    content: none !important;
+  }
+
+  .wedding-timeline__item {
+    grid-template-columns: 70px minmax(0,1fr) !important;
+    grid-template-rows: auto auto !important;
+    align-items: start !important;
+    min-height: 0 !important;
+    padding-block: 1.4rem;
+  }
+
+  .wedding-timeline__marker {
+    grid-column: 1 !important;
+    grid-row: 1 / span 2 !important;
+    width: 58px !important;
+    height: 58px !important;
+  }
+
+  .wedding-timeline__time,
+  .wedding-timeline__content {
+    grid-column: 2 !important;
+    min-width: 0;
+    padding-left: .75rem !important;
+  }
+
+  .wedding-timeline__time {
+    grid-row: 1 !important;
+    padding-top: 0 !important;
+  }
+
+  .wedding-timeline__content {
+    grid-row: 2 !important;
+    padding-top: .5rem !important;
+    padding-bottom: 0 !important;
+  }
+
+  .wedding-timeline__time strong {
+    font-size: clamp(2.5rem, 13vw, 3.6rem) !important;
+  }
+
+  /* Dress-code and comfort cards become vertically readable. */
+  .dress-card {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    min-height: 0 !important;
+  }
+
+  .dress-card__visual {
+    min-height: 0 !important;
+    padding: .8rem !important;
+  }
+
+  .dress-card__content {
+    padding: 1.35rem !important;
+  }
+
+  .comfort-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .comfort-card {
+    display: grid !important;
+    grid-template-columns: 92px minmax(0,1fr);
+    align-items: center;
+    gap: 1rem;
+    min-height: 0 !important;
+    padding: 1rem !important;
+  }
+
+  .comfort-card__icon--image {
+    grid-row: 1 / span 2;
+    width: 92px !important;
+    height: 92px !important;
+    margin: 0 !important;
+  }
+
+  .comfort-card h3,
+  .comfort-card p {
+    grid-column: 2;
+    min-width: 0;
+    margin: 0;
+  }
+
+  .comfort-card p {
+    margin-top: .35rem;
+  }
+
+  /* Pet photos and text never occupy the same layer. */
+  .pet-profile__layout--reverse .pet-profile__portrait,
+  .pet-profile__portrait {
+    order: 1 !important;
+  }
+
+  .pet-profile__copy {
+    order: 2 !important;
+  }
+
+  .pet-photo-real,
+  .pet-photo-real img {
+    position: relative !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    aspect-ratio: 4 / 5;
+  }
+
+  .pet-photo-real img {
+    object-fit: cover;
+  }
+
+  .pet-profile__stamp,
+  .pet-profile__stamp--umka {
+    right: .5rem !important;
+    bottom: .5rem !important;
+    left: auto !important;
+    width: 108px !important;
+  }
+
+  .pet-gallery__grid,
+  .pets-teaser__cards {
+    grid-template-columns: 1fr !important;
+  }
+
+  .pet-mini-card,
+  .pet-mini-card:nth-child(2) {
+    transform: none !important;
+  }
+
+  /* Dark closing sections receive a solid text layer. */
+  .with-love__inner,
+  .wedding-transition__inner,
+  .celebration-rabbits__inner,
+  .family-gratitude__inner {
+    position: relative;
+    z-index: 5;
+    width: auto;
+    padding: 1.2rem;
+    border-radius: 24px;
+    background: rgba(38,58,48,.36);
+    backdrop-filter: blur(5px);
+  }
+
+  .with-love,
+  .wedding-transition,
+  .celebration-rabbits,
+  .family-gratitude {
+    min-height: auto !important;
+  }
+
+  .site-footer__inner {
+    gap: .8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-hero,
+  .wedding-hero,
+  .celebration-hero,
+  .family-hero {
+    padding-bottom: 300px !important;
+  }
+
+  .home-hero__art,
+  .family-hero__art,
+  .wedding-church-placeholder,
+  .garden-table {
+    height: 300px !important;
+  }
+
+  .home-hero__title,
+  .wedding-hero__title,
+  .celebration-hero__title,
+  .family-hero__title {
+    font-size: clamp(3.25rem, 16vw, 4.8rem) !important;
+  }
+
+  .wedding-hero__actions,
+  .celebration-hero__actions,
+  .family-hero__actions,
+  .home-hero__actions,
+  .wedding-place__actions,
+  .celebration-place__actions {
+    width: 100%;
+    align-items: stretch !important;
+    flex-direction: column !important;
+  }
+
+  .button,
+  .wedding-hero__actions .button,
+  .celebration-hero__actions .button,
+  .family-hero__actions .button,
+  .home-hero__actions .button {
+    max-width: 100%;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .comfort-card {
+    grid-template-columns: 76px minmax(0,1fr);
+  }
+
+  .comfort-card__icon--image {
+    width: 76px !important;
+    height: 76px !important;
+  }
+}

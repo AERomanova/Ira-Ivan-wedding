@@ -1,0 +1,101 @@
+/* Mobile v2: deterministic iPhone layout */
+@media (max-width: 820px) {
+  html,body{overflow-x:hidden!important;width:100%!important;max-width:100%!important}
+  .site-shell,main,section{width:100%!important;max-width:100%!important;overflow-x:hidden!important}
+  .container{width:auto!important;max-width:none!important;margin-inline:18px!important;padding-inline:0!important}
+  .reveal,.reveal.is-visible{opacity:1!important;transform:none!important}
+
+  /* Generated hero art is the only illustration layer on mobile. */
+  .wedding-church-placeholder,
+  .celebration-hero__trees,
+  .celebration-hero__house,
+  .celebration-hero__grass,
+  .garden-table{display:none!important}
+
+  .home-hero,.wedding-hero,.celebration-hero,.family-hero{
+    display:flex!important;flex-direction:column!important;height:auto!important;min-height:0!important;padding:0!important;overflow:hidden!important
+  }
+  .home-hero__content,.wedding-hero__content,.celebration-hero__content,.family-hero__content{
+    order:1!important;position:relative!important;inset:auto!important;width:auto!important;max-width:none!important;
+    margin:0 18px!important;padding:calc(var(--header-height) + 28px) 0 30px!important;z-index:5!important
+  }
+  .home-hero__scene,.wedding-hero__scene,.celebration-hero__scene,.family-hero__scene{
+    order:2!important;position:relative!important;inset:auto!important;width:100%!important;height:360px!important;min-height:360px!important;overflow:hidden!important
+  }
+  .wedding-hero__art,.celebration-hero__art{
+    position:absolute!important;inset:0!important;width:100%!important;height:100%!important;max-width:none!important;
+    object-fit:contain!important;object-position:center bottom!important;opacity:1!important;transform:none!important;filter:none!important
+  }
+  .wedding-hero__scene{background:linear-gradient(180deg,#f8f2e8,#eee2d3)!important}
+  .celebration-hero__scene{background:linear-gradient(180deg,#f2eadf,#dfe9dc)!important}
+
+  /* Text must remain readable on the white mobile content panels. */
+  .celebration-hero__content{color:#31483a!important;background:#fffaf3!important}
+  .celebration-hero__eyebrow,.celebration-hero__title,.celebration-hero__lead,
+  .celebration-hero__facts span,.celebration-hero__facts strong,.celebration-hero__calendar{color:#31483a!important;text-shadow:none!important}
+  .celebration-hero__title em{color:#b48758!important}
+  .celebration-hero__facts{display:grid!important;grid-template-columns:1fr!important;gap:0!important;margin-top:20px!important;border:1px solid rgba(49,72,58,.16)!important;border-radius:18px!important;overflow:hidden!important;background:#fff!important}
+  .celebration-hero__facts>div{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;align-items:center!important;padding:13px 15px!important;border:0!important;border-bottom:1px solid rgba(49,72,58,.12)!important}
+  .celebration-hero__facts>div:last-child{border-bottom:0!important}
+
+  .wedding-hero__content{background:#fffaf3!important;color:#31483a!important}
+  .wedding-hero__title,.wedding-hero__lead,.wedding-hero__eyebrow,.wedding-hero__facts span,.wedding-hero__facts strong{color:#31483a!important;text-shadow:none!important}
+
+  /* Cards and pictures: one clear column, no clipping. */
+  .event-card,.wedding-place__layout,.celebration-place__layout,.celebration-dress__layout,.collection-story__layout,.interactive-shelf__layout,.pet-profile__layout{
+    display:grid!important;grid-template-columns:1fr!important;width:100%!important;gap:22px!important
+  }
+  .event-card{height:auto!important;min-height:0!important;overflow:hidden!important}
+  .event-card__visual,.event-card__visual--final{position:relative!important;inset:auto!important;width:100%!important;height:250px!important;min-height:250px!important;overflow:hidden!important}
+  .event-card__visual img,.event-card__visual--final img{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important}
+  .event-card__content{position:relative!important;inset:auto!important;width:100%!important;padding:22px!important}
+  .wedding-place__map,.celebration-map,.dress-card__visual,.open-suitcase,.collection-album{position:relative!important;inset:auto!important;width:100%!important;height:auto!important;overflow:hidden!important}
+  .wedding-place__map-art,.celebration-map__art,.dress-card__image,.open-suitcase__illustration{display:block!important;width:100%!important;height:auto!important;object-fit:contain!important}
+
+  /* Family hero: keep all rabbits inside the cabinet and sitting on boards. */
+  .family-hero__scene{height:430px!important;background:#f5eee3!important}
+  .family-room{display:none!important}
+  .family-hero__art{display:none!important}
+  .family-hero__branch{display:none!important}
+  .family-hero-shelf{position:absolute!important;inset:18px!important;width:auto!important;height:auto!important;overflow:hidden!important;opacity:1!important;transform:none!important}
+  .family-hero-shelf__board--one{top:48%!important}
+  .family-hero-shelf__board--two{top:79%!important}
+  .hero-shelf-rabbit{width:64px!important;height:84px!important;transform:none!important;overflow:visible!important}
+  .hero-shelf-rabbit img{display:block!important;width:100%!important;height:100%!important;max-width:100%!important;object-fit:contain!important;transform:none!important;mix-blend-mode:multiply!important}
+  .hero-shelf-rabbit--1{top:calc(48% - 82px)!important;left:8%!important}
+  .hero-shelf-rabbit--2{top:calc(48% - 84px)!important;left:38%!important}
+  .hero-shelf-rabbit--3{top:calc(48% - 80px)!important;right:7%!important}
+  .hero-shelf-rabbit--4{top:calc(79% - 84px)!important;left:22%!important}
+  .hero-shelf-rabbit--5{top:calc(79% - 82px)!important;right:20%!important}
+  .family-hero-shelf__label{display:none!important}
+
+  /* Interactive shelf: fixed rows with rabbits resting exactly on each board. */
+  .interactive-shelf__visual{position:relative!important;width:100%!important;height:570px!important;min-height:570px!important;overflow:visible!important}
+  .interactive-shelf__cabinet{position:absolute!important;inset:0!important;overflow:hidden!important}
+  .interactive-shelf__board--top{top:35%!important}
+  .interactive-shelf__board--middle{top:64%!important}
+  .interactive-shelf__board--bottom{top:89%!important}
+  .shelf-item{width:68px!important;height:88px!important;transform:none!important;transition:filter .2s ease!important;overflow:visible!important}
+  .shelf-item img{display:block!important;width:100%!important;height:100%!important;max-width:100%!important;object-fit:contain!important;transform:none!important;mix-blend-mode:multiply!important;pointer-events:none!important}
+  .shelf-item--1{top:calc(35% - 86px)!important;left:7%!important}
+  .shelf-item--2{top:calc(35% - 88px)!important;left:38%!important}
+  .shelf-item--3{top:calc(35% - 84px)!important;right:6%!important}
+  .shelf-item--4{top:calc(64% - 88px)!important;left:22%!important}
+  .shelf-item--5{top:calc(64% - 86px)!important;right:18%!important}
+  .shelf-item--guest{top:calc(89% - 92px)!important;left:50%!important;width:72px!important;height:92px!important;transform:translateX(-50%)!important;opacity:.92!important}
+  .shelf-item--guest:hover,.shelf-item--guest:focus-visible,.shelf-item--guest.is-selected{transform:translateX(-50%)!important}
+  .interactive-shelf__visual-note{bottom:-42px!important}
+
+  /* No decorative animals may float outside their intended sections. */
+  .celebration-rabbits__rabbit{max-width:74px!important;max-height:100px!important}
+
+  .mobile-dock{right:8px!important;left:8px!important;bottom:8px!important}
+}
+
+@media (max-width: 420px){
+  .container,.home-hero__content,.wedding-hero__content,.celebration-hero__content,.family-hero__content{margin-inline:16px!important}
+  .home-hero__scene,.wedding-hero__scene,.celebration-hero__scene{height:330px!important;min-height:330px!important}
+  .family-hero__scene{height:400px!important;min-height:400px!important}
+  .hero-shelf-rabbit{width:58px!important;height:78px!important}
+  .shelf-item{width:62px!important;height:82px!important}
+}
