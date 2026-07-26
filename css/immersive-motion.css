@@ -1,0 +1,634 @@
+/* =========================================================
+   Итерация 8 — погружение, переходы и микровзаимодействия
+   ========================================================= */
+
+:root {
+  --motion-x: 0;
+  --motion-y: 0;
+  --hero-scroll: 0;
+  --page-progress: 0;
+}
+
+html {
+  scroll-padding-top: calc(var(--header-height) + 18px);
+}
+
+/* Вход и выход страницы */
+html.motion-ready body {
+  animation: page-body-enter 420ms ease both;
+}
+
+.page-transition {
+  position: fixed;
+  z-index: 9999;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255,239,187,0.15), transparent 27%),
+    linear-gradient(145deg, #49604f, #263a30);
+  transition:
+    opacity 420ms var(--ease-soft),
+    visibility 0s linear 420ms;
+}
+
+.page-transition::before,
+.page-transition::after {
+  position: absolute;
+  width: 38vw;
+  height: 110vh;
+  border-left: 2px solid rgba(255,250,243,0.12);
+  border-radius: 50%;
+  content: "";
+  opacity: 0.7;
+}
+
+.page-transition::before {
+  top: -28%;
+  left: -9%;
+  transform: rotate(24deg);
+}
+
+.page-transition::after {
+  right: -9%;
+  bottom: -28%;
+  transform: scaleX(-1) rotate(24deg);
+}
+
+.page-transition__rabbit {
+  position: relative;
+  width: 72px;
+  height: 102px;
+  color: rgba(255,250,243,0.82);
+  opacity: 0;
+  transform: translateY(22px) scale(0.8);
+  transition:
+    opacity 430ms var(--ease-out),
+    transform 620ms var(--ease-out);
+}
+
+.page-transition__rabbit i,
+.page-transition__rabbit b {
+  position: absolute;
+  display: block;
+  border: 2px solid currentColor;
+}
+
+.page-transition__rabbit b {
+  right: 7px;
+  bottom: 0;
+  left: 7px;
+  height: 58px;
+  border-radius: 48% 48% 40% 40%;
+}
+
+.page-transition__rabbit i {
+  top: 0;
+  left: 16px;
+  width: 16px;
+  height: 49px;
+  border-radius: 70% 70% 30% 30%;
+  transform: rotate(-12deg);
+}
+
+.page-transition__rabbit i::after {
+  position: absolute;
+  top: -2px;
+  left: 24px;
+  width: 16px;
+  height: 49px;
+  border: 2px solid currentColor;
+  border-radius: inherit;
+  content: "";
+  transform: rotate(23deg);
+}
+
+.page-transition__caption {
+  position: absolute;
+  top: calc(50% + 84px);
+  color: rgba(255,250,243,0.68);
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 380ms ease 100ms,
+    transform 480ms var(--ease-out) 100ms;
+}
+
+html.is-page-leaving .page-transition {
+  pointer-events: all;
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+html.is-page-leaving .page-transition__rabbit,
+html.is-page-leaving .page-transition__caption {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Индикатор чтения */
+.site-progress {
+  position: fixed;
+  z-index: 950;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 3px;
+  pointer-events: none;
+}
+
+.site-progress__line {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--color-honey), var(--color-rose));
+  transform: scaleX(var(--page-progress));
+  transform-origin: left center;
+  will-change: transform;
+}
+
+.site-progress__rabbit {
+  position: absolute;
+  top: 5px;
+  left: calc(var(--page-progress) * (100% - 28px));
+  width: 20px;
+  height: 28px;
+  color: var(--color-honey);
+  opacity: calc(0.35 + var(--page-progress));
+  transform: translateX(-50%);
+  transition: opacity 180ms linear;
+}
+
+.site-progress__rabbit::before,
+.site-progress__rabbit::after {
+  position: absolute;
+  content: "";
+  border: 1px solid currentColor;
+}
+
+.site-progress__rabbit::before {
+  right: 2px;
+  bottom: 0;
+  left: 2px;
+  height: 16px;
+  border-radius: 48%;
+}
+
+.site-progress__rabbit::after {
+  top: 0;
+  left: 4px;
+  width: 5px;
+  height: 14px;
+  border-radius: 70%;
+  transform: rotate(-10deg);
+  box-shadow: 7px 0 0 -0.5px transparent, 7px 0 0 0 currentColor;
+}
+
+/* Переключатель движения */
+.motion-toggle {
+  position: fixed;
+  z-index: 920;
+  right: 1.1rem;
+  bottom: 1.1rem;
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.62rem 0.85rem;
+  border: 1px solid rgba(49,72,58,0.14);
+  border-radius: var(--radius-pill);
+  color: var(--color-forest);
+  background: rgba(255,250,243,0.82);
+  box-shadow: 0 10px 28px rgba(49,72,58,0.10);
+  backdrop-filter: blur(12px);
+  font-size: 0.68rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 260ms var(--ease-out),
+    background 260ms ease,
+    color 260ms ease;
+}
+
+.motion-toggle:hover,
+.motion-toggle:focus-visible {
+  transform: translateY(-3px);
+}
+
+.motion-toggle__icon {
+  position: relative;
+  width: 22px;
+  height: 12px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+}
+
+.motion-toggle__icon::after {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 6px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  content: "";
+  background: currentColor;
+  transition: transform 260ms var(--ease-out);
+}
+
+.motion-toggle[aria-pressed="true"] {
+  color: var(--color-paper);
+  background: rgba(49,72,58,0.90);
+}
+
+.motion-toggle[aria-pressed="true"] .motion-toggle__icon::after {
+  transform: translateX(10px);
+}
+
+/* Параллакс */
+.final-art {
+  --art-scale: 1.012;
+  transform:
+    translate3d(
+      calc(var(--motion-x) * 13px),
+      calc((var(--motion-y) * 10px) - (var(--hero-scroll) * 22px)),
+      0
+    )
+    scale(var(--art-scale));
+  transform-origin: center;
+  will-change: transform;
+  transition: transform 700ms var(--ease-out);
+}
+
+.celebration-hero.lights-on .celebration-hero__art {
+  --art-scale: 1.028;
+  transform:
+    translate3d(
+      calc(var(--motion-x) * 13px),
+      calc((var(--motion-y) * 10px) - (var(--hero-scroll) * 22px)),
+      0
+    )
+    scale(var(--art-scale));
+}
+
+.home-hero__branch,
+.wedding-branch,
+.celebration-branch,
+.family-hero__branch,
+.rsvp-hero__branch {
+  translate:
+    calc(var(--motion-x) * -5px)
+    calc(var(--motion-y) * -3px);
+}
+
+.site-header {
+  transform: translateY(0);
+  transition:
+    background var(--duration-base),
+    box-shadow var(--duration-base),
+    color var(--duration-base),
+    transform 420ms var(--ease-out);
+}
+
+.site-header.is-hidden {
+  transform: translateY(calc(-100% - 10px));
+}
+
+/* Световые пылинки */
+.ambient-motes {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ambient-motes span {
+  position: absolute;
+  width: var(--mote-size, 5px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  opacity: 0;
+  background: rgba(255,239,187,0.74);
+  box-shadow: 0 0 12px rgba(255,239,187,0.42);
+  animation: mote-float var(--mote-duration, 8s) ease-in-out infinite;
+  animation-delay: var(--mote-delay, 0s);
+}
+
+.ambient-motes span:nth-child(1) { left: 56%; bottom: 17%; --mote-size: 4px; --mote-duration: 7.4s; --mote-delay: -1s; }
+.ambient-motes span:nth-child(2) { left: 64%; bottom: 26%; --mote-size: 6px; --mote-duration: 9s; --mote-delay: -4s; }
+.ambient-motes span:nth-child(3) { left: 72%; bottom: 18%; --mote-size: 3px; --mote-duration: 6.7s; --mote-delay: -2s; }
+.ambient-motes span:nth-child(4) { left: 80%; bottom: 33%; --mote-size: 5px; --mote-duration: 8.5s; --mote-delay: -5s; }
+.ambient-motes span:nth-child(5) { left: 88%; bottom: 22%; --mote-size: 4px; --mote-duration: 7.8s; --mote-delay: -3s; }
+.ambient-motes span:nth-child(6) { left: 60%; bottom: 42%; --mote-size: 3px; --mote-duration: 9.5s; --mote-delay: -6s; }
+.ambient-motes span:nth-child(7) { left: 69%; bottom: 52%; --mote-size: 5px; --mote-duration: 8.2s; --mote-delay: -2.5s; }
+.ambient-motes span:nth-child(8) { left: 78%; bottom: 47%; --mote-size: 4px; --mote-duration: 7.1s; --mote-delay: -4.5s; }
+.ambient-motes span:nth-child(9) { left: 91%; bottom: 44%; --mote-size: 3px; --mote-duration: 9.1s; --mote-delay: -1.7s; }
+
+/* Варианты появления */
+.reveal[data-reveal-direction="left"] {
+  transform: translate3d(-34px, 18px, 0);
+}
+
+.reveal[data-reveal-direction="right"] {
+  transform: translate3d(34px, 18px, 0);
+}
+
+.reveal[data-reveal-direction="scale"] {
+  transform: translate3d(0, 20px, 0) scale(0.96);
+}
+
+.reveal.is-visible {
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+/* Активная навигация */
+.primary-nav a.is-current {
+  color: var(--color-honey);
+}
+
+.primary-nav a:not(.button).is-current::after {
+  transform: scaleX(1);
+}
+
+/* Наклон карточек */
+.motion-tilt {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  --tilt-lift: 0px;
+  transform:
+    perspective(900px)
+    rotateX(var(--tilt-x))
+    rotateY(var(--tilt-y))
+    translateY(var(--tilt-lift));
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition:
+    transform 460ms var(--ease-out),
+    box-shadow 460ms var(--ease-out);
+}
+
+.motion-tilt:hover {
+  --tilt-lift: -5px;
+  box-shadow: var(--shadow-card);
+}
+
+.motion-tilt > * {
+  transform: translateZ(0);
+}
+
+/* Магнитные элементы */
+.motion-magnetic {
+  --magnetic-x: 0px;
+  --magnetic-y: 0px;
+  transform: translate3d(var(--magnetic-x), var(--magnetic-y), 0);
+  transition:
+    transform 320ms var(--ease-out),
+    background var(--duration-base),
+    color var(--duration-base),
+    border-color var(--duration-base),
+    box-shadow var(--duration-base);
+}
+
+/* Расписание венчания */
+.wedding-timeline__progress {
+  position: absolute;
+  z-index: 1;
+  top: 2rem;
+  bottom: 2rem;
+  left: calc(24% + 44px);
+  width: 2px;
+  overflow: hidden;
+  background: rgba(180,135,88,0.10);
+}
+
+.wedding-timeline__progress::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(var(--color-honey), var(--color-rose));
+  transform: scaleY(var(--timeline-progress, 0));
+  transform-origin: top;
+}
+
+.wedding-timeline__item.is-timeline-active .wedding-timeline__marker {
+  border-color: rgba(180,135,88,0.72);
+  box-shadow:
+    0 12px 30px rgba(118,90,67,0.10),
+    0 0 0 8px rgba(180,135,88,0.08);
+  transform: scale(1.04);
+}
+
+.wedding-timeline__marker {
+  transition:
+    transform 460ms var(--ease-out),
+    border-color 460ms ease,
+    box-shadow 460ms ease;
+}
+
+/* Полка с зайчиками */
+.shelf-item {
+  animation: shelf-rabbit-breathe 5.5s ease-in-out infinite;
+  animation-delay: calc(var(--rabbit-index, 0) * -0.7s);
+}
+
+.shelf-item.is-selected {
+  filter: drop-shadow(0 16px 16px rgba(180,135,88,0.28));
+}
+
+.shelf-item.is-selected::before {
+  position: absolute;
+  inset: -20px;
+  border: 1px solid rgba(180,135,88,0.24);
+  border-radius: 50%;
+  content: "";
+  animation: rabbit-ring 900ms var(--ease-out);
+}
+
+.rabbit-spark {
+  position: absolute;
+  z-index: 6;
+  width: 5px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--color-honey);
+  pointer-events: none;
+  animation: rabbit-spark 760ms var(--ease-out) forwards;
+}
+
+/* RSVP */
+.rsvp-card {
+  transition:
+    transform 520ms var(--ease-out),
+    box-shadow 520ms var(--ease-out);
+}
+
+.rsvp-card:focus-within {
+  box-shadow: 0 26px 75px rgba(49,72,58,0.16);
+  transform: translateY(-3px);
+}
+
+.form-progress__track span {
+  box-shadow: 0 0 16px rgba(205,167,161,0.26);
+}
+
+.success-rabbit__heart {
+  animation: heart-pulse 1.9s ease-in-out infinite;
+}
+
+/* Декоративная реакция на гирлянды */
+.celebration-hero.lights-on .ambient-motes span {
+  background: rgba(255,232,164,0.96);
+  box-shadow: 0 0 18px rgba(255,232,164,0.78);
+}
+
+/* Keyframes */
+@keyframes page-body-enter {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes mote-float {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0) scale(0.7);
+  }
+  24% {
+    opacity: 0.72;
+  }
+  68% {
+    opacity: 0.34;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(16px, -82px, 0) scale(1.2);
+  }
+}
+
+@keyframes shelf-rabbit-breathe {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -3px; }
+}
+
+@keyframes rabbit-ring {
+  from { opacity: 0.72; transform: scale(0.65); }
+  to { opacity: 0; transform: scale(1.22); }
+}
+
+@keyframes rabbit-spark {
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform:
+      translate3d(var(--spark-x), var(--spark-y), 0)
+      scale(0.2);
+  }
+}
+
+@keyframes heart-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+/* Ручное и системное отключение движения */
+html[data-motion="off"] *,
+html[data-motion="off"] *::before,
+html[data-motion="off"] *::after {
+  scroll-behavior: auto !important;
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+html[data-motion="off"] .final-art,
+html[data-motion="off"] .motion-tilt,
+html[data-motion="off"] .motion-magnetic,
+html[data-motion="off"] .home-hero__branch,
+html[data-motion="off"] .wedding-branch,
+html[data-motion="off"] .celebration-branch,
+html[data-motion="off"] .family-hero__branch,
+html[data-motion="off"] .rsvp-hero__branch {
+  translate: none !important;
+  transform: none !important;
+}
+
+html[data-motion="off"] .page-transition,
+html[data-motion="off"] .site-progress__rabbit,
+html[data-motion="off"] .ambient-motes {
+  display: none !important;
+}
+
+@media (max-width: 780px) {
+  .motion-toggle {
+    right: 0.8rem;
+    bottom: 0.8rem;
+  }
+
+  .site-progress__rabbit {
+    display: none;
+  }
+
+  .wedding-timeline__progress {
+    left: 43px;
+  }
+}
+
+@media (max-width: 540px) {
+  .motion-toggle {
+    bottom: 5.8rem;
+    padding: 0.55rem;
+  }
+
+  .motion-toggle__label {
+    display: none;
+  }
+
+  .wedding-timeline__progress {
+    left: 32px;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .motion-tilt,
+  .motion-magnetic {
+    transform: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-transition,
+  .site-progress__rabbit,
+  .ambient-motes,
+  .motion-toggle {
+    display: none !important;
+  }
+
+  .final-art,
+  .motion-tilt,
+  .motion-magnetic {
+    transform: none !important;
+  }
+}
+
+/* Уточнение специфичности магнитного движения */
+.button.motion-magnetic,
+.lights-button.motion-magnetic {
+  transform: translate3d(var(--magnetic-x), var(--magnetic-y), 0);
+}
+
+.button.motion-magnetic:hover,
+.button.motion-magnetic:focus-visible,
+.lights-button.motion-magnetic:hover,
+.lights-button.motion-magnetic:focus-visible {
+  transform:
+    translate3d(var(--magnetic-x), calc(var(--magnetic-y) - 2px), 0);
+}
